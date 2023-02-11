@@ -1,0 +1,34 @@
+import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { PersoneService } from './persone.service';
+import { CreatePersoneDto } from './dto/create-persone.dto';
+import { UpdatePersoneDto } from './dto/update-persone.dto';
+
+@Controller('persone')
+export class PersoneController {
+  constructor(private readonly personeService: PersoneService) {}
+
+  @Post()
+  create(@Body() createPersoneDto: CreatePersoneDto) {
+    return this.personeService.create(createPersoneDto);
+  }
+
+  @Get()
+  findAll() {
+    return this.personeService.findAll();
+  }
+
+  @Get(':id')
+  findOne(@Param('id') id: string) {
+    return this.personeService.findOne(+id);
+  }
+
+  @Patch(':id')
+  update(@Param('id') id: string, @Body() updatePersoneDto: UpdatePersoneDto) {
+    return this.personeService.update(+id, updatePersoneDto);
+  }
+
+  @Delete(':id')
+  remove(@Param('id') id: string) {
+    return this.personeService.remove(+id);
+  }
+}
