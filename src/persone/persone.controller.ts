@@ -13,8 +13,8 @@ export class PersoneController {
   }
 
   @Get()
-  findAll() {
-    return this.personeService.findAll();
+  async findAll() {
+    return await this.personeService.findAll();
   }
 
   @Get(':id')
