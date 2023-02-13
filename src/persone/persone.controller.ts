@@ -19,7 +19,7 @@ export class PersoneController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.personeService.findOne(+id);
+    return this.personeService.findOne(id);
   }
 
   @Patch(':id')
@@ -29,6 +29,6 @@ export class PersoneController {
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.personeService.remove(+id);
+    return this.personeService.remove(id);
   }
 }

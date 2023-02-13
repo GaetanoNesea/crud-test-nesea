@@ -4,6 +4,7 @@ import { UpdatePersoneDto } from './dto/update-persone.dto';
 import { HttpService } from "@nestjs/axios";
 import {Persone} from "./entities/persone.entity";
 import {IPersona} from "./models/personeResponse.model";
+import {NotFoundError} from "rxjs";
 
 
 @Injectable()
@@ -42,15 +43,32 @@ export class PersoneService {
     });
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} persone`;
+  findOne(id: string) {
+    const persona = this.lista.find((persona) => persona.id === id);
+    return !!persona
+      ? {
+          message: 'OK',
+          find: 1,
+          persona,
+        }
+      : new NotFoundError('Nessuna Persona trovata');
   }
 
   update(id: number, updatePersoneDto: UpdatePersoneDto) {
     return `This action updates a #${id} persone`;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} persone`;
+  remove(id: string) {
+    const persona = this.lista.find((persona) => persona.id === id);
+    if (!!persona) {
+      this.lista = this.lista.filter((persona) => persona.id !== id);
+    }
+    return !!persona
+      ? {
+          message: 'OK',
+          remove: 1,
+          persona,
+        }
+      : new NotFoundError('Nessuna Persona trovata');
   }
 }

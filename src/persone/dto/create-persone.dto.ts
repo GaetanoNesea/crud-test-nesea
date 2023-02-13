@@ -1,9 +1,10 @@
-import { IsNotEmpty, IsString } from "class-validator";
+import {IsEmpty, IsNotEmpty, IsString,} from "class-validator";
 
 
 export class CreatePersoneDto {
 
-    @IsString()
+
+    @IsEmpty()
     id: string;
 
     @IsNotEmpty()
