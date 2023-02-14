@@ -24,7 +24,7 @@ export class PersoneController {
 
   @Patch(':id')
   update(@Param('id') id: string, @Body() updatePersoneDto: UpdatePersoneDto) {
-    return this.personeService.update(+id, updatePersoneDto);
+    return this.personeService.update(id, updatePersoneDto);
   }
 
   @Delete(':id')
