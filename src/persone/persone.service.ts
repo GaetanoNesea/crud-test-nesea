@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import {Injectable, NotFoundException} from '@nestjs/common';
 import { CreatePersoneDto } from './dto/create-persone.dto';
 import { UpdatePersoneDto } from './dto/update-persone.dto';
 import { HttpService } from "@nestjs/axios";
@@ -54,21 +54,40 @@ export class PersoneService {
       : new NotFoundError('Nessuna Persona trovata');
   }
 
-  update(id: number, updatePersoneDto: UpdatePersoneDto) {
-    return `This action updates a #${id} persone`;
+  update(id: string, updatePersoneDto: UpdatePersoneDto) {
+    let index = null;
+    const vuota = !this.lista.length;
+    let persona = this.lista.find((item, i) => {
+      if (item.id === id) {
+        index = i;
+        return item;
+      }
+    });
+    if (vuota || !persona) {
+      throw new NotFoundException('Nessun elemento nella lista, perchè vuota o persona non trovata');
+    }
+    persona = { ...persona, ...updatePersoneDto };
+    this.lista.splice(index, 1, persona);
+    return {
+          message: 'OK',
+          update: 1,
+          persona,
+      }
   }
 
   remove(id: string) {
     const persona = this.lista.find((persona) => persona.id === id);
+    const vuota = !this.lista.length;
+    if (vuota || !persona) {
+      throw new NotFoundException('Nessun elemento nella lista, perchè vuota o persona non trovata');
+    }
     if (!!persona) {
       this.lista = this.lista.filter((persona) => persona.id !== id);
     }
-    return !!persona
-      ? {
+    return {
           message: 'OK',
           remove: 1,
           persona,
         }
-      : new NotFoundError('Nessuna Persona trovata');
   }
 }
