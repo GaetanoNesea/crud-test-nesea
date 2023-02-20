@@ -9,11 +9,12 @@ export class ServiceModelClass<T extends ProvaModel, K, G> {
   lista: T[] = [];
   classe: new (...arg) => T;
   element: T;
+  find = false;
 
   constructor(readonly http: HttpService) {}
 
-  async create(obj: K, find: boolean = false) {
-    if (!this.lista.length && !!find) {
+  async create(obj: K) {
+    if (!this.lista.length && !!this.find) {
       await this.findAll();
     }
     return this.createFunction(obj);
@@ -33,20 +34,22 @@ export class ServiceModelClass<T extends ProvaModel, K, G> {
     return data.map((item) => ({...item, id: uuidv4()}));
   }
 
-  async findAll(find: boolean = false): Promise<T[]> {
+  getPersonaAPI() {
+    return this.http.get<T[]>('https://jsonplaceholder.typicode.com/users');
+  }
+
+  async findAll(): Promise<T[]> {
     try {
       return await new Promise((resolve, reject) => {
-        if (!this.lista.length && !!find) {
-          this.http
-            .get<T[]>('https://jsonplaceholder.typicode.com/users')
-            .subscribe({
-              next: ({data}) => {
-                this.lista = this.createListWithUUID(data);
-                resolve(this.lista);
-              },
-              error: (err) => reject(err),
-              complete: () => console.info('Promise complete'),
-            });
+        if (!this.lista.length && !!this.find) {
+          this.getPersonaAPI().subscribe({
+            next: ({data}) => {
+              this.lista = this.createListWithUUID(data);
+              resolve(this.lista);
+            },
+            error: (err) => reject(err),
+            complete: () => console.info('Promise complete'),
+          });
         } else {
           resolve(this.lista);
         }

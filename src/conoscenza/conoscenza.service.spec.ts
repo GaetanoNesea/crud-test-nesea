@@ -1,7 +1,6 @@
 import {Test, TestingModule} from '@nestjs/testing';
 import {ConoscenzaService} from './conoscenza.service';
 import {HttpModule} from '@nestjs/axios';
-import {ServiceModelClass} from "../shared/models/service.model";
 
 describe('ConoscenzaService', () => {
   let service: ConoscenzaService;
@@ -21,12 +20,13 @@ describe('ConoscenzaService', () => {
 
   it('should findAll with true called method createListWithUUID', async () => {
     const spy = jest.spyOn(service, 'createListWithUUID');
-    await expect(service.findAll(true)).resolves.toBeDefined();
+    await expect(service.findAll()).resolves.toBeDefined();
     expect(spy).toBeCalled();
   });
   it('should findAll with false not called method createListWithUUID', async () => {
     const spy = jest.spyOn(service, 'createListWithUUID');
-    await expect(service.findAll(false)).resolves.toBeDefined();
+    await expect(service.findAll(
+    )).resolves.toBeDefined();
     expect(spy).not.toBeCalled();
   });
 });

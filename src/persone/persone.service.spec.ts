@@ -103,11 +103,13 @@ describe('PersoneService', () => {
     expect(() => service.update('', personaSet)).toThrow(NotFoundException);
     service.lista = listaPersone;
     expect(() => service.update('2', personaSet)).toThrow(NotFoundException);
-    expect(() => service.update('1', personaSet)).not.toThrow(NotFoundException);
+    expect(() => service.update('1', personaSet)).not.toThrow(
+      NotFoundException,
+    );
   });
   it('should modifica persona response con persona modificata e lista persona con persona modificata', function () {
     service.lista = listaPersone;
-    let res = service.update('1', personaSet);
+    const res = service.update('1', personaSet);
     expect(res.persona.email).toEqual(personaSet.email);
     expect(res.persona.username).toEqual(personaSet.username);
     expect(res.persona.name).toEqual(personaSet.name);
