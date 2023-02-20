@@ -39,6 +39,6 @@ export class Persone implements IPersona {
   }
 
   static createId(data: IPersona[]) {
-    return data.map((persona) => ({ ...persona, id: uuidv4() }));
+    return data.map((persona) => ({...persona, id: uuidv4()}));
   }
 }

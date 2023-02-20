@@ -1,3 +1,5 @@
+import {ProvaModel} from "../../shared/models/prova.model";
+
 export interface Geo {
   lat: string;
   lng: string;
@@ -17,7 +19,7 @@ export interface Company {
   bs: string;
 }
 
-export interface IPersona {
+export interface IPersona extends ProvaModel {
   id: string;
   name: string;
   username: string;

@@ -19,16 +19,16 @@ export class ConoscenzaController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.conoscenzaService.findOne(+id);
+    return this.conoscenzaService.findOne(id);
   }
 
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateConoscenzaDto: UpdateConoscenzaDto) {
-    return this.conoscenzaService.update(+id, updateConoscenzaDto);
+    return this.conoscenzaService.update(id, updateConoscenzaDto);
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.conoscenzaService.remove(+id);
+    return this.conoscenzaService.remove(id);
   }
 }
