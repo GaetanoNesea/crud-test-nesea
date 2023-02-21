@@ -72,7 +72,7 @@ describe('PersoneService', () => {
     expect(apiEsterna).toBeCalledTimes(0);
     expect(service.lista).toHaveLength(1);
   });
-  it('should errore ricerca', function () {
+  it('should errore ricerca persone', function () {
     expect(() => service.findOne('')).toThrow(NotFoundException);
   });
   it('should findOne', async () => {
@@ -88,6 +88,16 @@ describe('PersoneService', () => {
   });
   it('should remove persona con lista vuota NotfoundException', function () {
     expect(() => service.remove('')).toThrow(NotFoundException);
+  });
+  it('should create a new persona', async () => {
+    const persona = await service.create({
+      name: 'Gaetano',
+      email: 'g.sabino@nesea.it',
+      username: 'Proviamo',
+      id: null,
+    });
+    expect(persona.name).toEqual('Gaetano');
+    expect(persona).toEqual(service.findOne(persona.id).persona);
   });
   it('should remove persona con id sbagliato', async () => {
     // let res = service.findOne('');

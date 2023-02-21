@@ -1,15 +1,23 @@
 import {HttpService} from '@nestjs/axios';
-import {Persone} from '../../persone/entities/persone.entity';
 import {IPersona} from '../../persone/models/personeResponse.model';
 import {NotFoundException} from '@nestjs/common';
 import {ProvaModel} from './prova.model';
 import {v4 as uuidv4} from 'uuid';
+
+export interface UpDate<T> extends Partial<Record<Type, T>> {
+  message: string;
+  update?: number;
+  find?: number;
+}
+
+export type Type = 'persona' | 'conoscenza' | 'competenze';
 
 export class ServiceModelClass<T extends ProvaModel, K, G> {
   lista: T[] = [];
   classe: new (...arg) => T;
   element: T;
   find = false;
+  type: Type = 'persona';
 
   constructor(readonly http: HttpService) {}
 
@@ -20,14 +28,10 @@ export class ServiceModelClass<T extends ProvaModel, K, G> {
     return this.createFunction(obj);
   }
 
-  createFunction<T extends IPersona>(obj: K) {
+  createFunction(obj: K) {
     const persona = new this.classe(obj);
     this.lista.push(persona);
     return persona;
-  }
-
-  private createClass() {
-    return new this.classe();
   }
 
   createListWithUUID(data: T[]): T[] {
@@ -59,7 +63,7 @@ export class ServiceModelClass<T extends ProvaModel, K, G> {
     }
   }
 
-  findOne(id: string) {
+  findOne(id: string): UpDate<T> {
     const persona = this.lista.find((persona) => persona.id === id);
     if (!persona) {
       throw new NotFoundException();
@@ -67,11 +71,11 @@ export class ServiceModelClass<T extends ProvaModel, K, G> {
     return {
       message: 'OK',
       find: 1,
-      persona,
+      [!this.type ? 'persona' : this.type]: persona,
     };
   }
 
-  update(id: string, updatePersoneDto: G) {
+  update(id: string, updatePersoneDto: G): UpDate<T> {
     let index = null;
     const vuota = !this.lista.length;
     let persona = this.lista.find((item, i) => {
@@ -88,9 +92,9 @@ export class ServiceModelClass<T extends ProvaModel, K, G> {
     persona = {...persona, ...updatePersoneDto};
     this.lista.splice(index, 1, persona);
     return {
-      message: 'OK',
+      message: 'Ok',
       update: 1,
-      persona,
+      [this.type]: persona,
     };
   }
 
@@ -108,7 +112,7 @@ export class ServiceModelClass<T extends ProvaModel, K, G> {
     return {
       message: 'OK',
       remove: 1,
-      persona,
+      [!this.type ? 'persona' : this.type]: persona,
     };
   }
 }
