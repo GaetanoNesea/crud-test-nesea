@@ -12,7 +12,9 @@ import {PersoneService} from './persone.service';
 import {CreatePersoneDto} from './dto/create-persone.dto';
 import {UpdatePersoneDto} from './dto/update-persone.dto';
 import {AuthGuard} from '@nestjs/passport';
+import {JwtAuthGuard} from '../auth/jwt-auth.guard';
 
+@UseGuards(JwtAuthGuard)
 @Controller('persone')
 export class PersoneController {
   constructor(private readonly personeService: PersoneService) {}
@@ -22,7 +24,6 @@ export class PersoneController {
     return this.personeService.create(createPersoneDto);
   }
 
-  @UseGuards(AuthGuard('local'))
   @Get()
   async findAll() {
     return await this.personeService.findAll();
