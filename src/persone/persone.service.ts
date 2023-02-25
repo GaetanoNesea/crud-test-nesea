@@ -4,6 +4,7 @@ import {UpdatePersoneDto} from './dto/update-persone.dto';
 import {HttpService} from '@nestjs/axios';
 import {IPersona} from './models/personeResponse.model';
 import {ServiceModelClass} from '../shared/models/service.model';
+import {Persone} from './entities/persone.entity';
 
 @Injectable()
 export class PersoneService extends ServiceModelClass<

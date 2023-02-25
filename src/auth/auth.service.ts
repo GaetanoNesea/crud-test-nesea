@@ -1,4 +1,4 @@
-import {Injectable} from '@nestjs/common';
+import {Injectable, NotFoundException, UnauthorizedException} from '@nestjs/common';
 import {UsersService} from '../users/users.service';
 import {JwtService} from '@nestjs/jwt';
 import {IUserModel} from '../users/models/user.model';
@@ -14,14 +14,22 @@ export class AuthService {
     name: string,
     password: string,
   ): Promise<{id: number; username: string} | null> {
-    const {pass, username, id} = await this.serviceUser.findOne(name);
-    if (username && pass === password) {
-      return {
-        id,
-        username,
-      };
+    try {
+      const {
+        pass = '',
+        username = '',
+        id = 0,
+      } = await this.serviceUser.findOne(name);
+      if (username && pass && pass === password) {
+        return {
+          id,
+          username,
+        };
+      }
+      throw new UnauthorizedException();
+    } catch (e) {
+      throw new NotFoundException();
     }
-    return null;
   }
 
   async login(user: IUserModel) {
