@@ -1,26 +1,23 @@
-import { Injectable } from '@nestjs/common';
-import { CreateCompetenzeDto } from './dto/create-competenze.dto';
-import { UpdateCompetenzeDto } from './dto/update-competenze.dto';
+import {Injectable} from '@nestjs/common';
+import {CreateCompetenzeDto} from './dto/create-competenze.dto';
+import {UpdateCompetenzeDto} from './dto/update-competenze.dto';
+import {ServiceModelClass} from '../shared/models/service.model';
+import {CompetenzeModel} from './model/competenze.model';
+import {HttpService} from '@nestjs/axios';
+import {Competenze} from './entities/competenze.entity';
 
 @Injectable()
-export class CompetenzeService {
-  create(createCompetenzeDto: CreateCompetenzeDto) {
-    return 'This action adds a new competenze';
-  }
+export class CompetenzeService extends ServiceModelClass<
+  CompetenzeModel,
+  CreateCompetenzeDto,
+  UpdateCompetenzeDto
+> {
 
-  findAll() {
-    return `This action returns all competenze`;
-  }
-
-  findOne(id: number) {
-    return `This action returns a #${id} competenze`;
-  }
-
-  update(id: number, updateCompetenzeDto: UpdateCompetenzeDto) {
-    return `This action updates a #${id} competenze`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} competenze`;
+  constructor(readonly http: HttpService) {
+    super(http);
+    this.classe = Competenze;
+    this.type = 'competenze';
   }
 }
+
+

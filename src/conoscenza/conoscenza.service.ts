@@ -15,6 +15,6 @@ export class ConoscenzaService extends ServiceModelClass<
   constructor(readonly http: HttpService) {
     super(http);
     this.classe = Conoscenza;
-    this.element = new Conoscenza('', '');
+    this.type = 'conoscenza';
   }
 }

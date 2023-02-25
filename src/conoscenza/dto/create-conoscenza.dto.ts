@@ -6,7 +6,7 @@ export class CreateConoscenzaDto {
   @IsByteLength(10, 15, {
     message: (validationArguments) => {
       const { constraints, value } = validationArguments;
-      return `Nome value: ${value} length: ${value.length} lunghezza non valida, min: ${constraints[0]} max: ${constraints[1]}`;
+      return `Nome value: ${value} length: ${value?.length} lunghezza non valida, min: ${constraints[0]} max: ${constraints[1]}`;
     },
   })
   nome: string;
@@ -16,7 +16,7 @@ export class CreateConoscenzaDto {
   @IsByteLength(20, 30, {
     message: (validationArguments) => {
       const { constraints, value } = validationArguments;
-      return `Descrizione value: ${value} length: ${value.length} lunghezza non valida, min: ${constraints[0]} max: ${constraints[1]}`;
+      return `Descrizione value: ${value} length: ${value?.length} lunghezza non valida, min: ${constraints[0]} max: ${constraints[1]}`;
     },
   })
   descrizione: string;

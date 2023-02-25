@@ -14,5 +14,6 @@ export class PersoneService extends ServiceModelClass<
   constructor(readonly http: HttpService) {
     super(http);
     this.find = true;
+    this.classe = Persone;
   }
 }
