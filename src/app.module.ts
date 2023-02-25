@@ -6,6 +6,8 @@ import { CompetenzeModule } from './competenze/competenze.module';
 import { ConoscenzaModule } from './conoscenza/conoscenza.module';
 import { PersoneModule } from './persone/persone.module';
 import { HttpModule } from '@nestjs/axios';
+import { AuthModule } from './auth/auth.module';
+import { UsersModule } from './users/users.module';
 
 @Module({
   imports: [
@@ -16,6 +18,8 @@ import { HttpModule } from '@nestjs/axios';
     CompetenzeModule,
     PersoneModule,
     ConoscenzaModule,
+    AuthModule,
+    UsersModule,
   ],
   controllers: [AppController],
   providers: [AppService],
