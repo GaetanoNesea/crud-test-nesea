@@ -6,10 +6,12 @@ import {
   Patch,
   Param,
   Delete,
+  UseGuards,
 } from '@nestjs/common';
-import { PersoneService } from './persone.service';
-import { CreatePersoneDto } from './dto/create-persone.dto';
-import { UpdatePersoneDto } from './dto/update-persone.dto';
+import {PersoneService} from './persone.service';
+import {CreatePersoneDto} from './dto/create-persone.dto';
+import {UpdatePersoneDto} from './dto/update-persone.dto';
+import {AuthGuard} from '@nestjs/passport';
 
 @Controller('persone')
 export class PersoneController {
@@ -20,6 +22,7 @@ export class PersoneController {
     return this.personeService.create(createPersoneDto);
   }
 
+  @UseGuards(AuthGuard('local'))
   @Get()
   async findAll() {
     return await this.personeService.findAll();
