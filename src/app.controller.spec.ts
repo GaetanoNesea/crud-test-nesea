@@ -23,7 +23,7 @@ describe('AppController', () => {
     });
 
     it('should login', () => {
-      appController.login({user: {username: 'gaetano', id: 1}});
+      appController.login({user: {username: 'gaetano', id: 1}, req: new Request('https://localhost:3001')});
     });
   });
 });

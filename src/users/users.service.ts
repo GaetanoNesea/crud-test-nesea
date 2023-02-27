@@ -7,17 +7,17 @@ export class UsersService {
     {
       id: 1,
       username: 'massimo',
-      pass: 'Massimo@nesea',
+      password: 'Massimo@nesea',
     },
     {
       id: 2,
       username: 'gaetano',
-      pass: 'Gaetano@nesea',
+      password: 'Gaetano@nesea',
     },
     {
       id: 3,
       username: 'danilo',
-      pass: 'Danilo@nesea',
+      password: 'Danilo@nesea',
     },
   ];
 

@@ -1,5 +1,5 @@
 export interface IUserModel {
-  id: number;
+  id?: number;
   username: string;
-  pass: string;
+  password?: string;
 }
