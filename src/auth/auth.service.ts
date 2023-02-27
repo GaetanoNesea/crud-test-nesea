@@ -43,4 +43,10 @@ export class AuthService {
       token: this.jwtService.sign(payload),
     };
   }
+
+  async recuperaPass(password: string) {
+    return {
+      message: 'Password inviata alla email specificata',
+    };
+  }
 }
